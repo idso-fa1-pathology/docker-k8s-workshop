@@ -1,0 +1,47 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: sr-demo-gpu
+  namespace: yn-gpu-workload
+  labels:
+      k8s-user: sranjbar
+spec:
+  backoffLimit: 0
+  ttlSecondsAfterFinished: 60
+  template:
+    spec:
+      nodeSelector:
+        "nvidia.com/gpu.present": "true"
+      securityContext:
+        runAsUser: 297910
+        runAsGroup: 900027
+        fsGroup: 900027
+      containers:
+        - name: main
+          image: hpcharbor.mdanderson.edu/sranjbar/demo:latest-x86_64
+          command: ["python", "/rsrch5/home/plm/sranjbar/docker_projects/docker-k8s-workshop/hello.py"]
+          args: []
+          workingDir: "/rsrch5/home/plm/sranjbar/"
+          env:
+          - name: HOME
+            value: "/rsrch5/home/plm/sranjbar/"
+          volumeMounts:
+            - name: shm
+              mountPath: "/dev/shm"
+            - name: home
+              mountPath: "/rsrch5/home/plm/sranjbar/"
+          resources:
+            limits:
+              nvidia.com/gpu: "1"
+          imagePullPolicy: IfNotPresent
+      volumes:
+        - name: shm
+          emptyDir:
+            medium: Memory
+            sizeLimit: '21474836480'
+        - name: home
+          persistentVolumeClaim:
+            claimName: sranjbar-gpu-home 
+      restartPolicy: Never
+
