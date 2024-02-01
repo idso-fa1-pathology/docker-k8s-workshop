@@ -57,7 +57,11 @@ $ docker push hpcharbor.mdanderson.edu/<your_folder>/demo:latest-x86_64
 Before we proceed, ensure that your kubernetes account is set up, that your HOME directory (/rsrch4/home/plm/<username>) has been mounted, and that your HOME directory includes a `.kube` folder with a config file inside. There should be a `K8s-templates` in your home directory. Take a look at your templates. Make sure your `securityContext.runAsUser` matches your employee id, and that `volumeMounts` is your HOME directory.
 
 - First time use, you need to load the kubectl module in seadragon using the following command. It will give a warning that you can ignore.
-```module load kubectl/1.25.6```
+
+```
+$ ssh seadragon
+$ module load kubectl/1.25.6
+```
 
 - Note, the module (kubectl) is the command itself. See if `kubectl` is a recognized command.
 
