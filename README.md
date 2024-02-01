@@ -80,7 +80,7 @@ $ module load kubectl/1.25.6
    - Change `metadata.name, containers.image, containers.command` appropriately. See `job.hello.gpu.yaml` for reference.
    - Make use of the `containers.args` if your code has any arguments.
 
-Ok, you now have a job template that looks for your docker image on HPCharbor, and calls `python hello.py` when running it.
+Ok, you now have a job template that looks for your docker image on HPCharbor.
 
 3. ssh into your seadragon account and cd inside this directory. 
 
