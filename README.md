@@ -52,7 +52,7 @@ $ docker tag demo:latest-x86_64 hpcharbor.mdanderson.edu/<your_folder>/demo:late
 $ docker push hpcharbor.mdanderson.edu/<your_folder>/demo:latest-x86_64
 ```
 
-## Part 3. kubernetes
+## Part 3. kubernetes checklist and set up
 
 Before we proceed, ensure that your kubernetes account is set up, that your HOME directory (/rsrch4/home/plm/<username>) has been mounted, and that your HOME directory includes a `.kube` folder with a config file inside. There should be a `K8s-templates` in your home directory. Take a look at your templates. Make sure your `securityContext.runAsUser` matches your employee id, and that `volumeMounts` is your HOME directory.
 
@@ -63,7 +63,7 @@ $ ssh seadragon
 $ module load kubectl/1.25.6
 ```
 
-- Note, the module (kubectl) is the command itself. See if `kubectl` is a recognized command.
+Note, the module (kubectl) is the command itself. See if `kubectl` is a recognized command.
 
 ## Part 4. Submitting a kubernetes job
 
@@ -82,9 +82,9 @@ $ module load kubectl/1.25.6
 
 Ok, you now have a job template that looks for your docker image on HPCharbor.
 
-3. ssh into your seadragon account and cd inside this directory. 
+3. On seadragon, cd in your code directory. 
 
-4. lets run the job. you can do it 2 ways, using job-runner.sh or using the kubectl apply command.
+4. Run the job using job-runner.sh or using the kubectl apply command.
 
 ```
 job-runner.sh job.hello.gpu.yaml
@@ -96,10 +96,9 @@ kubectl apply -f <job.yaml>
 
 5. Check progress by looking at your job status in OpenLens or you can wait and see what happens. Once the job is done, you will see a `logs` folder and a `done` folder appear in your current directory. Check out the contents of the log folder for details.
 
+I highly recommend installing OpenLens on your machine. It helps a lot with monitoring job progress (Talk to Ping about instructions and setting it up).
 
 ## lessons learned
 
-- I highly recommend installing OpenLens on your machine. It helps a lot with monitoring job progress (Talk to Ping about instructions and setting it up) 
-- If in Part 3 -> step 4 the log file says ```exec /usr/local/bin/python: exec format error```, go back to Part2 -> step 1.
-- Make use of tags for differentiating different versions of your image.
+- If the kubernetes fails to run the job and the log file says ```exec /usr/local/bin/python: exec format error```, go back to Part 2.1.
 - Make sure you are using the latest version of the yaml templates.
